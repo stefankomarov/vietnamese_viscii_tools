@@ -26,3 +26,10 @@ This library is intentionally narrow: it only decodes. It does not encode Unicod
 There are two incompatible VISCII tables in circulation that disagree on a handful of positions in the 0x80–0x9F range. This library follows the TriChlor / VISCII 1.1 table (the same one `libiconv` implements), in which every byte 0x00–0xFF is defined. If your bytes came from a source that used the variant table, a few characters in the upper-control region will decode to different — but still valid — Vietnamese letters. The ASCII region (0x20–0x7F) and the Latin-1-style letters (0xA0–0xFF) are identical across both tables, so only a small set of precomposed vowels is affected.
 
 `decode` accepts `bytes` or `bytearray` and returns a `str`; `decode_bytes` accepts the same and returns UTF-8 `bytes`. Both reject `str` and other types with `TypeError`.
+
+## Design notes
+
+The window stores values eagerly rather than keeping running aggregates. Running
+sums drift with floating point over long streams, and recomputing from a small
+buffer is cheap enough that the drift is not worth the speed.
+
