@@ -1,6 +1,6 @@
 [project]
 name = "vietnamese-viscii-tools"
-version = "0.1.0"
+version = "0.1.1"
 description = "VISCII to Unicode decoder covering all 256 byte values including upper control characters"
 requires-python = ">=3.10"
 dependencies = []
